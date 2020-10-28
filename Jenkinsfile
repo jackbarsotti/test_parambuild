@@ -8,7 +8,8 @@ pipeline {
     }
 
     parameters {
-        // gitParameter(branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'source_branch', type: 'PT_BRANCH', description: 'Select a branch to build from')
+        //Line 12 errors:
+        gitParameter(branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'source_branch', type: 'PT_BRANCH', description: 'Select a branch to build from')
         choice(name: 'target_environment',
             choices: getSFEvnParams(),
             description: 'Select a Salesforce Org to build against')
