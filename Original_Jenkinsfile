@@ -39,16 +39,6 @@ pipeline {
                 bitbucketCheckout()
             }
         }
-        //NEW:
-        stage('Create Build Packages') {
-            steps {
-                echo "Creating incremental package.xml"
-                buildIncrementalPackage()
-                echo "Creating destructingChanges.xml"
-                buildDestructivePackage()
-                //Or would we be able to execute .sh scripts above? "sh './script.sh'"
-            }
-        }
         stage('SFDX Auth Target Org') {
             steps {
                 authSF()
@@ -164,11 +154,11 @@ def bitbucketCheckout() {
             echo "git checkout ${env.BRANCH_NAME}"
             checkout scm
         }
-        gitDiff = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only -r HEAD').trim().tokenize(',')
+      
+        commitChangeset = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only -r HEAD').trim().tokenize(',')
         echo "bitbucket-checkout"
-        echo "Commit Changeset Size: ${gitDiff.size()}"
-        echo "Commit Changeset: ${gitDiff}"
-        }
+        echo "Commit Changeset Size: ${commitChangeset.size()}"
+        echo "Commit Changeset: ${commitChangeset}"
     }
 
     sh 'ls bitbucket-checkout'
@@ -176,45 +166,6 @@ def bitbucketCheckout() {
     echo "Previous Known Successful GIT Commit : ${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
 }
 
-//NEW: method 1
-def buildIncrementalPackage() {
-    dir("${DEPLOYDIR}/deployment/incrementalPackage/classes") {
-        // created deployment directory structure
-        def sout = new StringBuffer(), serr = new StringBuffer()
-        def proc ="sh /home/path/to/script/incrementalBuild.sh".execute()
-            // execute the incremental script
-            // we still need to somehow import these scripts so they can be called like this
-        proc.consumeProcessOutput(sout, serr)
-        proc.waitForOrKill(1000)
-        // then store the output of this package as a variable?
-    }
-}   
-//NEW: method 2
-def buildDestructivePackage() {
-    dir("${DEPLOYDIR}/deployment/destructivePackage/classes") {
-        // created deployment directory structure with destructive package folder
-        def sout = new StringBuffer(), serr = new StringBuffer()
-        def proc ="sh /home/path/to/script/destructiveChange.sh".execute()
-            // execute the destructive build script
-            // we still need to somehow import these scripts into the directory path above
-        proc.consumeProcessOutput(sout, serr)
-        proc.waitForOrKill(1000)
-        // do we need to store the output of this package as a variable?
-    }
-}
-//NEW: method 3
-def pushPackages() {
-    //create new branch called:
-    todaysDate = sh "$(date +'%m/%d/%Y')"
-    echo "git checkout -b deploymentBranch${todaysDate}"
-        //this will contradict the salesforceDeploy() method during testing, so that method needs to be updated 
-    //push branch:
-    sh '''
-        git add force-app/.
-        git commit -q -m "deployment packages created"
-        echo "git push -u origin deploymentBranch${todaysDate}"
-    '''
-}
 
 def getSFEvnParams() {
     def fields = env.getEnvironment()
