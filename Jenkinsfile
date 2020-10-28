@@ -205,7 +205,7 @@ def buildDestructivePackage() {
 //NEW: method 3
 def pushPackages() {
     //create new branch called:
-    todaysDate = sh "$(date+'%m/%d/%Y')"
+    todaysDate ="sh $(date+'%m/%d/%Y')"
     echo "git checkout -b deploymentBranch${todaysDate}"
         //this will contradict the salesforceDeploy() method during testing, so that method needs to be updated 
     //push branch:
