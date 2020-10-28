@@ -168,7 +168,7 @@ def githubCheckout() {
         echo "github-checkout"
         echo "Commit Changeset Size: ${gitDiff.size()}"
         echo "Commit Changeset: ${gitDiff}"
-        }
+        
     }
 
     sh 'ls github-checkout'
