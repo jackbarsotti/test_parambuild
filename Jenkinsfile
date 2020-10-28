@@ -33,10 +33,10 @@ pipeline {
                 echo sh(returnStdout: true, script: 'env')
             }
         }
-        stage('Bitbucket Sync Target Branch') {
+        stage('GitHub Sync Target Branch') {
             steps {  
-                echo "Bitbucket Sync Target Branch"
-                bitbucketCheckout()
+                echo "GitHub Sync Target Branch"
+                githubCheckout()
             }
         }
         //NEW:
@@ -83,7 +83,7 @@ def salesforceDeploy() {
     else {
         deployBranchURL = "${env.BRANCH_NAME}"
     }
-    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/bitbucket-checkout/force-app/main/default"
+    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default"
     echo DEPLOYDIR
     def SF_INSTANCE_URL = "https://login.salesforce.com"
 
@@ -151,27 +151,27 @@ def authSF() {
     echo 'end sf auth method'
 }
 
-def bitbucketCheckout() {
-    dir('bitbucket-checkout') {
+def githubCheckout() {
+    dir('github-checkout') {
         // determine if the build was trigger from a git event or manually built with parameters
         // [[_class:jenkins.branch.BranchEventCause, shortDescription:Branch event]]
         // [[_class:hudson.model.Cause$UserIdCause, shortDescription:Started by user JenkinsAdmin, userId:jenkins_ubuntu, userName:JenkinsAdmin]]
         if ("${currentBuild.buildCauses}".contains("UserIdCause")) {
             echo "git checkout ${params.source_branch}"
-            git credentialsId: 'bitbucket_unpw', url:'https://nick-sansotti@bitbucket.org/nick-sansotti/test_parambuild.git', branch: "${params.source_branch}"
+            git credentialsId: 'gh_unpw', url:'https://github.com/jackbarsotti/test_parambuild.git', branch: "${params.source_branch}"
         }
         else if("${currentBuild.buildCauses}".contains("BranchEventCause")) {
             echo "git checkout ${env.BRANCH_NAME}"
             checkout scm
         }
         gitDiff = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only -r HEAD').trim().tokenize(',')
-        echo "bitbucket-checkout"
+        echo "github-checkout"
         echo "Commit Changeset Size: ${gitDiff.size()}"
         echo "Commit Changeset: ${gitDiff}"
         }
     }
 
-    sh 'ls bitbucket-checkout'
+    sh 'ls github-checkout'
     echo "Current GIT Commit : ${env.GIT_COMMIT}"
     echo "Previous Known Successful GIT Commit : ${env.GIT_PREVIOUS_SUCCESSFUL_COMMIT}"
 }
@@ -181,7 +181,7 @@ def buildIncrementalPackage() {
     dir("${DEPLOYDIR}/deployment/incrementalPackage/classes") {
         // created deployment directory structure
         def sout = new StringBuffer(), serr = new StringBuffer()
-        def proc ="sh /home/path/to/script/incrementalBuild.sh".execute()
+        def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/incrementalBuild.sh".execute()
             // execute the incremental script
             // we still need to somehow import these scripts so they can be called like this
         proc.consumeProcessOutput(sout, serr)
@@ -194,7 +194,7 @@ def buildDestructivePackage() {
     dir("${DEPLOYDIR}/deployment/destructivePackage/classes") {
         // created deployment directory structure with destructive package folder
         def sout = new StringBuffer(), serr = new StringBuffer()
-        def proc ="sh /home/path/to/script/destructiveChange.sh".execute()
+        def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/destructiveChange.sh".execute()
             // execute the destructive build script
             // we still need to somehow import these scripts into the directory path above
         proc.consumeProcessOutput(sout, serr)

@@ -1,13 +1,13 @@
 #!/bin/bash
 
 #deploydir updated with subdirectory "deployment", which is our new deployment package(s) parent dir:
-export DEPLOYDIR=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/bitbucket-checkout/force-app/main/default/deployment
+export DEPLOYDIR=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment
 #create incrementalPackage folder within deploydir
 export incrementalPackagePath=$DEPLOYDIR/incrementalPackage
 #diff files will be moved into the classes folder:
 export SOURCE_PATH=$incrementalPackagePath/classes
-export classPath=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/bitbucket-checkout/force-app/main/default/classes
-export triggerPath=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/bitbucket-checkout/force-app/main/default/triggers
+export classPath=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/classes
+export triggerPath=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/triggers
 
 # Git Diff Section:
 
