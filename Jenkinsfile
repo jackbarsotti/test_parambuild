@@ -9,7 +9,7 @@ pipeline {
 
     parameters {
         //Line 12 errors:
-        gitParameter(branchFilter: 'origin/(.*)', 
+        someChoice(branchFilter: 'origin/(.*)', 
             defaultValue: 'master', 
             name: 'source_branch', 
             type: 'PT_BRANCH', 
