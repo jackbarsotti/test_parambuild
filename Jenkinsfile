@@ -9,7 +9,7 @@ pipeline {
 
     parameters {
         //Line 12 errors:
-        booleanParam(filter: 'origin/(.*)', defaultValue: 'master', name: 'source_branch', type: 'PT_BRANCH', description: 'Select a branch to build from')
+        gitParameter(branch: 'origin/(.*)', defaultValue: 'master', name: 'source_branch', type: 'PT_BRANCH', description: 'Select a branch to build from')
         choice(name: 'target_environment',
             choices: getSFEvnParams(),
             description: 'Select a Salesforce Org to build against')
