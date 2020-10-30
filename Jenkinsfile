@@ -9,7 +9,7 @@ pipeline {
 
     parameters {
         //Line 12 errors:
-        booleanParam(branch: 'origin/(.*)', defaultValue: 'master', name: 'source_branch', type: 'PT_BRANCH', description: 'Select a branch to build from')
+        gitParameter(branchFilter: 'origin/(.*)', defaultValue: 'master', name: 'source_branch', type: 'PT_BRANCH', description: 'Select a branch to build from')
         choice(name: 'target_environment',
             choices: getSFEvnParams(),
             description: 'Select a Salesforce Org to build against')
@@ -84,7 +84,8 @@ def salesforceDeploy() {
     else {
         deployBranchURL = "${env.BRANCH_NAME}"
     }
-    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default"
+    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
+        // added to deploydir
     echo DEPLOYDIR
     def SF_INSTANCE_URL = "https://login.salesforce.com"
 
@@ -184,10 +185,8 @@ def buildIncrementalPackage() {
         def sout = new StringBuffer(), serr = new StringBuffer()
         def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/incrementalBuild.sh".execute()
             // execute the incremental script
-            // we still need to somehow import these scripts so they can be called like this
         proc.consumeProcessOutput(sout, serr)
         proc.waitForOrKill(1000)
-        // then store the output of this package as a variable?
     }
 }   
 //NEW: method 2
@@ -197,18 +196,15 @@ def buildDestructivePackage() {
         def sout = new StringBuffer(), serr = new StringBuffer()
         def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/destructiveChange.sh".execute()
             // execute the destructive build script
-            // we still need to somehow import these scripts into the directory path above
         proc.consumeProcessOutput(sout, serr)
         proc.waitForOrKill(1000)
-        // do we need to store the output of this package as a variable?
     }
 }
 //NEW: method 3
 def pushPackages() {
-    //create new branch called:
+    //create new branch called deploymentBranch${todaysDate}:
     todaysDate = sh "${date+'%m/%d/%Y'}"
     echo "git checkout -b deploymentBranch${todaysDate}"
-        //this will contradict the salesforceDeploy() method during testing, so that method needs to be updated 
     //push branch:
     sh '''
         git add force-app/.

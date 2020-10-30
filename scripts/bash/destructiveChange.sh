@@ -11,6 +11,7 @@ export API_VERSION=49.0 # api version (same as in the sfdx-project.json)
 
 # Copy D files from git diff to destructive changes folder
   #originally: git log --oneline --diff-filter=D --summary
+  #can interchangeably use: git diff --name-only --pretty="" test
   #using git diff-tree instead because the output is much shorter (only file names) and therefore easier to use:
 git diff-tree --no-commit-id --name-only -r HEAD --diff-filter=D |
   while read -r file; do
@@ -19,7 +20,7 @@ git diff-tree --no-commit-id --name-only -r HEAD --diff-filter=D |
 
 echo "Converting Source format to Metadata API format"
 #convert existing git diff files in the classes folder into metadata api format
-sfdx force:source:convert -p ${SOURCE_PATH} -d ${SOURCE_PATH}
+sfdx force:source:convert -p $SOURCE_PATH -d $SOURCE_PATH
 
 # copy package.xml to destructiveChangesPre.xml
 cp manifest/package.xml $destructivePackagePath/destructiveChangesPre.xml
