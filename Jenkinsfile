@@ -43,6 +43,12 @@ pipeline {
         //NEW:
         stage('Create Build Packages') {
             steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
+					buildIncrementalPackage()
+				}
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
+					buildDestructivePackage()
+				}
                 echo "Creating incremental package.xml"
                 buildIncrementalPackage()
                 echo "Creating destructingChanges.xml"
