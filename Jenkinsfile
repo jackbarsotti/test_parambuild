@@ -83,17 +83,17 @@ def salesforceDeploy() {
 
     def TEST_LEVEL='NoTestRun'
     def VALIDATE_ONLY = false
-    def deployBranchURL = ""
-    if("${env.BRANCH_NAME}".contains("/")) {
-        deployBranchURL = "${env.BRANCH_NAME}".replace("/", "_")
-    }
-    else {
-        deployBranchURL = "${env.BRANCH_NAME}"
-    }
+    //def deployBranchURL = ""
+    //if("${env.BRANCH_NAME}".contains("/")) {
+    //    deployBranchURL = "${env.BRANCH_NAME}".replace("/", "_")
+    //}
+    //else {
+    //    deployBranchURL = "${env.BRANCH_NAME}"
+    //}
 
-    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
+    //def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
         // added to deploydir
-    echo DEPLOYDIR
+    //echo DEPLOYDIR
     def SF_INSTANCE_URL = "https://login.salesforce.com"
 
     dir("${DEPLOYDIR}") {
