@@ -50,11 +50,11 @@ pipeline {
 				    buildDestructivePackage()
 			    }
                 echo "Creating incremental package.xml"
-                sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/incrementalBuild.sh'
-                //buildIncrementalPackage()
+                //sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/incrementalBuild.sh'
+                buildIncrementalPackage()
                 echo "Creating destructingChanges.xml"
-                sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/destructiveChange.sh'
-                //buildDestructivePackage()
+                //sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/destructiveChange.sh'
+                buildDestructivePackage()
                 //Or would we be able to execute .sh scripts above? "sh './script.sh'"
             }
         }
@@ -202,6 +202,7 @@ def buildIncrementalPackage() {
     dir("${DEPLOYDIR}/deployment/incrementalPackage/classes") {
         // created deployment directory structure
         sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/incrementalBuild.sh'
+        echo $?
         //def sout = new StringBuffer(), serr = new StringBuffer()
         //def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/incrementalBuild.sh".execute()
             // execute the incremental script
