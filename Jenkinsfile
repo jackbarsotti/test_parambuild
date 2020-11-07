@@ -50,9 +50,11 @@ pipeline {
 				    buildDestructivePackage()
 			    }
                 echo "Creating incremental package.xml"
-                buildIncrementalPackage()
+                sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/incrementalBuild.sh'
+                //buildIncrementalPackage()
                 echo "Creating destructingChanges.xml"
-                buildDestructivePackage()
+                sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/destructiveChange.sh'
+                //buildDestructivePackage()
                 //Or would we be able to execute .sh scripts above? "sh './script.sh'"
             }
         }
