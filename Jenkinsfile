@@ -208,6 +208,14 @@ def buildIncrementalPackage() {
 }   
 //NEW: method 2
 def buildDestructivePackage() {
+    def deployBranchURL = ""
+    if("${env.BRANCH_NAME}".contains("/")) {
+        deployBranchURL = "${env.BRANCH_NAME}".replace("/", "_")
+    }
+    else {
+        deployBranchURL = "${env.BRANCH_NAME}"
+    }
+    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"
     dir("${DEPLOYDIR}/deployment/destructivePackage/classes") {
         // created deployment directory structure with destructive package folder
         def sout = new StringBuffer(), serr = new StringBuffer()
