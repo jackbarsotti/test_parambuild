@@ -201,8 +201,7 @@ def buildIncrementalPackage() {
     echo DEPLOYDIR
     dir("${DEPLOYDIR}/deployment/incrementalPackage/classes") {
         // created deployment directory structure
-        sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/incrementalBuild.sh'
-        echo $?
+        sh(/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/incrementalBuild.sh)
         //def sout = new StringBuffer(), serr = new StringBuffer()
         //def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/incrementalBuild.sh".execute()
             // execute the incremental script
