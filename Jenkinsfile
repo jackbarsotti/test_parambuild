@@ -90,9 +90,10 @@ def salesforceDeploy() {
     else {
         deployBranchURL = "${env.BRANCH_NAME}"
     }
-    
+
     def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
         // added to deploydir
+    DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"
     echo DEPLOYDIR
     def SF_INSTANCE_URL = "https://login.salesforce.com"
 
