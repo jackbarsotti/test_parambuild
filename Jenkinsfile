@@ -93,7 +93,6 @@ def salesforceDeploy() {
 
     def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
         // added to deploydir
-    DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"
     echo DEPLOYDIR
     def SF_INSTANCE_URL = "https://login.salesforce.com"
 
@@ -188,6 +187,9 @@ def githubCheckout() {
 
 //NEW: method 1
 def buildIncrementalPackage() {
+    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
+        // added to deploydir
+    echo DEPLOYDIR
     dir("${DEPLOYDIR}/deployment/incrementalPackage/classes") {
         // created deployment directory structure
         def sout = new StringBuffer(), serr = new StringBuffer()
