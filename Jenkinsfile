@@ -47,8 +47,8 @@ pipeline {
 					buildIncrementalPackage()
 				}
                 catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
-					buildDestructivePackage()
-				}
+				    buildDestructivePackage()
+			    }
                 echo "Creating incremental package.xml"
                 buildIncrementalPackage()
                 echo "Creating destructingChanges.xml"
@@ -199,11 +199,12 @@ def buildIncrementalPackage() {
     echo DEPLOYDIR
     dir("${DEPLOYDIR}/deployment/incrementalPackage/classes") {
         // created deployment directory structure
-        def sout = new StringBuffer(), serr = new StringBuffer()
-        def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/incrementalBuild.sh".execute()
+        sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/scripts/incrementalBuild.sh'
+        //def sout = new StringBuffer(), serr = new StringBuffer()
+        //def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/incrementalBuild.sh".execute()
             // execute the incremental script
-        proc.consumeProcessOutput(sout, serr)
-        proc.waitForOrKill(1000)
+        //proc.consumeProcessOutput(sout, serr)
+        //proc.waitForOrKill(1000)
     }
 }   
 //NEW: method 2
