@@ -219,11 +219,12 @@ def buildDestructivePackage() {
     def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"
     dir("${DEPLOYDIR}/deployment/destructivePackage/classes") {
         // created deployment directory structure with destructive package folder
-        def sout = new StringBuffer(), serr = new StringBuffer()
-        def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/destructiveChange.sh".execute()
+        sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/destructiveChange.sh'
+        //def sout = new StringBuffer(), serr = new StringBuffer()
+        //def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/destructiveChange.sh".execute()
             // execute the destructive build script
-        proc.consumeProcessOutput(sout, serr)
-        proc.waitForOrKill(1000)
+        //proc.consumeProcessOutput(sout, serr)
+        //proc.waitForOrKill(1000)
     }
 }
 //NEW: method 3
