@@ -156,10 +156,12 @@ def authSF() {
     }
     else if("${currentBuild.buildCauses}".contains("BranchEventCause")) {
         if(env.BRANCH_NAME == 'master' || env.CHANGE_TARGET == 'master') {
-            SF_AUTH_URL = env.SFDX_DEV
+            SF_AUTH_URL = env.SFDX_AUTH_URL
+            //SF_AUTH_URL = env.SFDX_DEV
         }
         else { // {PR} todo - better determine if its a PR env.CHANGE_TARGET?
-            SF_AUTH_URL = env.SFDX_DEV
+            SF_AUTH_URL = env.SFDX_AUTH_URL
+            //SF_AUTH_URL = env.SFDX_DEV
         }
     }
 
