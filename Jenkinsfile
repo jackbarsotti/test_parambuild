@@ -50,12 +50,20 @@ pipeline {
 				    buildDestructivePackage()
 			    }
                 echo "Creating incremental package.xml"
-                //sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/incrementalBuild.sh'
                 buildIncrementalPackage()
                 echo "Creating destructingChanges.xml"
-                //sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/destructiveChange.sh'
                 buildDestructivePackage()
                 //Or would we be able to execute .sh scripts above? "sh './script.sh'"
+            }
+        }
+        //NEW:
+        stage('Push New Packages Branch') {
+            steps {
+                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
+				    pushPackages()
+			    }
+                echo "Pushing new branch with packages"
+                pushPackages()
             }
         }
         stage('SFDX Auth Target Org') {
@@ -155,6 +163,7 @@ def authSF() {
         }
     }
 
+    echo 'SF_AUTH_URL:'
     echo SF_AUTH_URL
     writeFile file: 'authjenkinsci.txt', text: SF_AUTH_URL
     sh 'ls -l authjenkinsci.txt'
