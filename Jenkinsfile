@@ -240,13 +240,14 @@ def buildDestructivePackage() {
 def pushPackages() {
     //create new branch called deploymentBranch${todaysDate}:
     //todaysDate = sh "${date+'%m/%d/%Y'}"
-    todaysDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date()))
-    echo "git checkout -b deploymentBranch${todaysDate}"
+    Date date = new Date()
+    String datePart = date.format("dd/MM/yyyy")
+    echo "git checkout -b deploymentBranch${datePart}"
     //push branch:
     sh '''
         git add force-app/.
         git commit -q -m "deployment packages created"
-        echo "git push -u origin deploymentBranch${todaysDate}"
+        echo "git push -u origin deploymentBranch${datePart}"
     '''
 }
 
