@@ -239,10 +239,9 @@ def buildDestructivePackage() {
 //NEW: method 3
 def pushPackages() {
     //create new branch called deploymentBranch${todaysDate}:
-    //todaysDate = sh "${date+'%m/%d/%Y'}"
     Date date = new Date()
     String datePart = date.format("dd/MM/yyyy")
-    echo "git checkout -b deploymentBranch${datePart}"
+    sh "git checkout -b deploymentBranch${datePart}"
     //push branch:
     sh '''
         git add force-app/.
