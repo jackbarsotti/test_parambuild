@@ -59,7 +59,7 @@ pipeline {
         //NEW:
         //stage('Push New Packages Branch') {
         //    steps {
-        //        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
+        //      catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
 		//		    pushPackages()
 		//	    }
         //        echo "Pushing new branch with packages"
@@ -93,17 +93,17 @@ def salesforceDeploy() {
 
     def TEST_LEVEL='NoTestRun'
     def VALIDATE_ONLY = false
-    //def deployBranchURL = ""
-    //if("${env.BRANCH_NAME}".contains("/")) {
-    //    deployBranchURL = "${env.BRANCH_NAME}".replace("/", "_")
-    //}
-    //else {
-    //    deployBranchURL = "${env.BRANCH_NAME}"
-    //}
+    def deployBranchURL = ""
+    if("${env.BRANCH_NAME}".contains("/")) {
+        deployBranchURL = "${env.BRANCH_NAME}".replace("/", "_")
+    }
+    else {
+        deployBranchURL = "${env.BRANCH_NAME}"
+    }
 
-    //def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
+    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
         // added to deploydir
-    //echo DEPLOYDIR
+    echo DEPLOYDIR
     def SF_INSTANCE_URL = "https://login.salesforce.com"
 
     dir("${DEPLOYDIR}") {
@@ -157,11 +157,9 @@ def authSF() {
     else if("${currentBuild.buildCauses}".contains("BranchEventCause")) {
         if(env.BRANCH_NAME == 'master' || env.CHANGE_TARGET == 'master') {
             SF_AUTH_URL = env.SFDX_AUTH_URL
-            //SF_AUTH_URL = env.SFDX_DEV
         }
         else { // {PR} todo - better determine if its a PR env.CHANGE_TARGET?
             SF_AUTH_URL = env.SFDX_AUTH_URL
-            //SF_AUTH_URL = env.SFDX_DEV
         }
     }
 
@@ -212,7 +210,6 @@ def buildIncrementalPackage() {
     echo DEPLOYDIR
     dir("${DEPLOYDIR}/deployment/incrementalPackage/classes") {
         // created deployment directory structure
-        //sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/incrementalBuild.sh'
         def sout = new StringBuffer(), serr = new StringBuffer()
         def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/incrementalBuild.sh".execute()
             // execute the incremental script
@@ -232,7 +229,6 @@ def buildDestructivePackage() {
     def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"
     dir("${DEPLOYDIR}/deployment/destructivePackage/classes") {
         // created deployment directory structure with destructive package folder
-        //sh '/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/destructiveChange.sh'
         def sout = new StringBuffer(), serr = new StringBuffer()
         def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/destructiveChange.sh".execute()
             //execute the destructive build script
