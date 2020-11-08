@@ -184,7 +184,8 @@ def githubCheckout() {
             echo "git checkout ${env.BRANCH_NAME}"
             checkout scm
         }
-        gitDiff = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only -r HEAD').trim().tokenize(',')
+        //gitDiff = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only -r HEAD').trim().tokenize(',')
+        gitDiff = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only -r HEAD --diff-filter=D').trim().tokenize(',')
         echo "github-checkout"
         echo "Commit Changeset Size: ${gitDiff.size()}"
         echo "Commit Changeset: ${gitDiff}"
