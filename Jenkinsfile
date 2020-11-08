@@ -240,7 +240,7 @@ def buildDestructivePackage() {
 //NEW: method 3
 def pushPackages() {
     //create new branch called deploymentBranch${todaysDate}:
-    sh "git rm --cached github-checkout"
+    //sh "git rm --cached github-checkout"
     Date date = new Date()
     String datePart = date.format("dd/MM/yyyy")
     sh "git branch -D deploymentBranch${datePart}"
