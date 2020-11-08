@@ -1,7 +1,7 @@
 #!/bin/bash
 exec 1>/tmp/test
 #deploydir updated with subdirectory "deployment", which is our new deployment package(s) parent dir:
-export DEPLOYDIR=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment
+export DEPLOYDIR=/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment
 #create incrementalPackage folder within deploydir
 export incrementalPackagePath=$DEPLOYDIR/incrementalPackage
 #diff files will be moved into the classes folder:
@@ -13,7 +13,8 @@ export triggerPath=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/gith
 
 #using git diff-tree instead because the output is much shorter (only file names) and therefore easier to use:
 #can interchangeably use: git diff --name-only --pretty="" test
-git diff-tree --no-commit-id --diff-filter=UMA --name-only -r HEAD | 
+#git diff-tree --no-commit-id --diff-filter=UMA --name-only -r HEAD | 
+git diff --name-only --pretty="" --diff-filter=UMA master |
 while read -r file; do
   # Copy the files from git diff into the deploy directory:
   sudo cp --parents "$file" $SOURCE_PATH 2>/dev/null

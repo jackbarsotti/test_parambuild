@@ -2,7 +2,7 @@
 exec 1>/tmp/test
 # inputs:
 #deploydir updated with subdirectory "deployment", which is our new deployment package(s) parent dir:
-export DEPLOYDIR=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment
+export DEPLOYDIR=/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment
 #create destructivePackage folder (incremental build creates incrementalPackage folder within same deploydir):
 export destructivePackagePath=$DEPLOYDIR/destructivePackage
 #diff files will be moved into the classes folder:
