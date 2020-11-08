@@ -238,22 +238,23 @@ def buildDestructivePackage() {
     }
 }
 //NEW: method 3
-def pushPackages() {
+//def pushPackages() {
     //create new branch called deploymentBranch${todaysDate}:
     //sh "git rm --cached github-checkout"
-    Date date = new Date()
-    String datePart = date.format("dd/MM/yyyy")
+    //Date date = new Date()
+    //String datePart = date.format("dd/MM/yyyy")
     //sh "git branch -D deploymentBranch${datePart}"
-    sh "git checkout deploymentBranch${datePart}"
+    //sh "git checkout -b deploymentBranch${datePart}"
+    //sh "git checkout deploymentBranch${datePart}"
     //push branch:
     //below: git add force-app/.
-    sh '''
-        git add force-app/.
-        git commit -q -m "deployment packages created"
-    '''
-    git credentialsId: 'gh_unpw2', url:'https://github.com/jackbarsotti/test_parambuild.git', branch: "deploymentBranch${datePart}"
-    sh "git push -u origin deploymentBranch${datePart}"
-}
+    //sh '''
+    //    git add force-app/.
+    //    git commit -q -m "deployment packages created"
+    //'''
+    //git credentialsId: 'gh_unpw2', url:'https://github.com/jackbarsotti/test_parambuild.git', branch: "deploymentBranch${datePart}"
+    //sh "git push -u origin deploymentBranch${datePart}"
+//}
 
 def getSFEvnParams() {
     def fields = env.getEnvironment()
