@@ -101,7 +101,7 @@ def salesforceDeploy() {
         deployBranchURL = "${env.BRANCH_NAME}"
     }
 
-    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
+    def DEPLOYDIR="/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
         // added to deploydir
     echo DEPLOYDIR
     def SF_INSTANCE_URL = "https://login.salesforce.com"
@@ -205,7 +205,7 @@ def buildIncrementalPackage() {
     else {
         deployBranchURL = "${env.BRANCH_NAME}"
     }
-    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
+    def DEPLOYDIR="/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
         // added to deploydir
     echo DEPLOYDIR
     dir("${DEPLOYDIR}/deployment/incrementalPackage/classes") {
@@ -226,7 +226,7 @@ def buildDestructivePackage() {
     else {
         deployBranchURL = "${env.BRANCH_NAME}"
     }
-    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"
+    def DEPLOYDIR="/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment"
     dir("${DEPLOYDIR}/deployment/destructivePackage/classes") {
         // created deployment directory structure with destructive package folder
         def sout = new StringBuffer(), serr = new StringBuffer()
