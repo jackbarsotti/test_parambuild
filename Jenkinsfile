@@ -239,7 +239,8 @@ def buildDestructivePackage() {
 //NEW: method 3
 def pushPackages() {
     //create new branch called deploymentBranch${todaysDate}:
-    todaysDate = sh "${date+'%m/%d/%Y'}"
+    //todaysDate = sh "${date+'%m/%d/%Y'}"
+    todaysDate = new java.text.SimpleDateFormat("yyyy-MM-dd").format(new Date()))
     echo "git checkout -b deploymentBranch${todaysDate}"
     //push branch:
     sh '''
