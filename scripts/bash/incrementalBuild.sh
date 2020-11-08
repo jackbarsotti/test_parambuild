@@ -1,5 +1,5 @@
 #!/bin/bash
-
+exec 1>/tmp/test
 #deploydir updated with subdirectory "deployment", which is our new deployment package(s) parent dir:
 export DEPLOYDIR=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment
 #create incrementalPackage folder within deploydir
