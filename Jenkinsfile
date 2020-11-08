@@ -248,7 +248,7 @@ def pushPackages() {
     //push branch:
     //below: git add force-app/.
     sh '''
-        git add .
+        git add force-app/.
         git commit -q -m "deployment packages created"
     '''
     git credentialsId: 'gh_unpw2', url:'https://github.com/jackbarsotti/test_parambuild.git', branch: "deploymentBranch${datePart}"
