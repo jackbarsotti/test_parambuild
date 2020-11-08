@@ -196,7 +196,7 @@ def buildIncrementalPackage() {
     else {
         deployBranchURL = "${env.BRANCH_NAME}"
     }
-    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts"    
+    def DEPLOYDIR="/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
         // added to deploydir
     echo DEPLOYDIR
     dir("${DEPLOYDIR}/deployment/incrementalPackage/classes") {
