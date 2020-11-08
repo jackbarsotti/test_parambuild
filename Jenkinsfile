@@ -243,8 +243,8 @@ def pushPackages() {
     //sh "git rm --cached github-checkout"
     Date date = new Date()
     String datePart = date.format("dd/MM/yyyy")
-    sh "git branch -D deploymentBranch${datePart}"
-    sh "git checkout -b deploymentBranch${datePart}"
+    //sh "git branch -D deploymentBranch${datePart}"
+    sh "git checkout deploymentBranch${datePart}"
     //push branch:
     //below: git add force-app/.
     sh '''
