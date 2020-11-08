@@ -251,6 +251,7 @@ def pushPackages() {
         git add .
         git commit -q -m "deployment packages created"
     '''
+    git credentialsId: 'gh_unpw2', url:'https://github.com/jackbarsotti/test_parambuild.git', branch: "deploymentBranch${datePart}"
     sh "git push -u origin deploymentBranch${datePart}"
 }
 
