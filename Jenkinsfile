@@ -184,7 +184,7 @@ def githubCheckout() {
             echo "git checkout ${env.BRANCH_NAME}"
             checkout scm
         }
-        gitDiff = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only -r HEAD').trim().tokenize(',')
+        //gitDiff = sh(returnStdout: true, script: 'git diff-tree --no-commit-id --name-only -r HEAD').trim().tokenize(',')
         gitDiff = sh(returnStdout: true, script: 'git diff --name-only --pretty="" --diff-filter=D master').trim().tokenize(',')
         echo "github-checkout"
         echo "Commit Changeset Size: ${gitDiff.size()}"
@@ -245,8 +245,9 @@ def pushPackages() {
     sh "git branch -d deploymentBranch${datePart}"
     sh "git checkout -b deploymentBranch${datePart}"
     //push branch:
+    //below: git add force-app/.
     sh '''
-        git add force-app/.
+        git add .
         git commit -q -m "deployment packages created"
         echo "git push -u origin deploymentBranch${datePart}"
     '''
