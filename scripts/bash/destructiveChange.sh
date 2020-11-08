@@ -10,10 +10,12 @@ export SOURCE_PATH=$destructivePackagePath/classes
 export API_VERSION=49.0 # api version (same as in the sfdx-project.json)
 
 # Copy D files from git diff to destructive changes folder
+git diff --name-only --pretty="" --diff-filter=D master |
+#git diff-tree --no-commit-id --name-only -r HEAD --diff-filter=D |
   #originally: git log --oneline --diff-filter=D --summary
-  #can interchangeably use: git diff --name-only --pretty="" test
+  #can interchangeably use: git diff --name-only --pretty="" master
+    #best for when D files weren't deleted on the most recent commit
   #using git diff-tree instead because the output is much shorter (only file names) and therefore easier to use:
-git diff-tree --no-commit-id --name-only -r HEAD --diff-filter=D |
   while read -r file; do
     sudo cp "$file" $SOURCE_PATH 2>/dev/null
   done
