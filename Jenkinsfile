@@ -244,14 +244,14 @@ def pushPackages() {
     String datePart = date.format("dd/MM/yyyy")
     sh "git branch -D deploymentBranch${datePart}"
     sh "git checkout -b deploymentBranch${datePart}"
-    //sh "git rm --cached github-checkout"
+    sh "git rm --cached github-checkout"
     //push branch:
     //below: git add force-app/.
     sh '''
         git add .
         git commit -q -m "deployment packages created"
-        git push -u origin deploymentBranch${datePart}
     '''
+    sh "git push -u origin deploymentBranch${datePart}"
 }
 
 def getSFEvnParams() {
