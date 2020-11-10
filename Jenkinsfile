@@ -248,8 +248,8 @@ def pushPackages() {
     sh "git checkout deploymentBranch${datePart}"
     //push branch:
     //below: git add force-app/.
-    sh "git config status.showuntrackedfiles no"
     sh '''
+        git config status.showuntrackedfiles no
         git add force-app/.
         git commit -m "deployment packages created"
     '''
