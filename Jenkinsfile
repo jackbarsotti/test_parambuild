@@ -59,9 +59,9 @@ pipeline {
         //NEW:
         //stage('Push New Packages Branch') {
         //    steps {
-        //      catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
-		//		    pushPackages()
-		//	    }
+        //        catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
+		//		      pushPackages()
+		//	      }
         //        echo "Pushing new branch with packages"
         //        pushPackages()
         //    }
@@ -101,7 +101,7 @@ def salesforceDeploy() {
         deployBranchURL = "${env.BRANCH_NAME}"
     }
 
-    def DEPLOYDIR="/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
+    def DEPLOYDIR="/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/force-app/main/default/deployment"    
         // added to deploydir
     echo DEPLOYDIR
     def SF_INSTANCE_URL = "https://login.salesforce.com"
@@ -206,13 +206,13 @@ def buildIncrementalPackage() {
     else {
         deployBranchURL = "${env.BRANCH_NAME}"
     }
-    def DEPLOYDIR="/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment"    
+    def DEPLOYDIR="/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/force-app/main/default/deployment"    
         // added to deploydir
     echo DEPLOYDIR
     dir("${DEPLOYDIR}/deployment/incrementalPackage/classes") {
         // created deployment directory structure
         def sout = new StringBuffer(), serr = new StringBuffer()
-        def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/incrementalBuild.sh".execute()
+        def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/scripts/bash/incrementalBuild.sh".execute()
             // execute the incremental script
         proc.consumeProcessOutput(sout, serr)
         proc.waitForOrKill(1000)
@@ -227,11 +227,11 @@ def buildDestructivePackage() {
     else {
         deployBranchURL = "${env.BRANCH_NAME}"
     }
-    def DEPLOYDIR="/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment"
+    def DEPLOYDIR="/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/force-app/main/default/deployment"
     dir("${DEPLOYDIR}/deployment/destructivePackage/classes") {
         // created deployment directory structure with destructive package folder
         def sout = new StringBuffer(), serr = new StringBuffer()
-        def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/destructiveChange.sh".execute()
+        def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/scripts/bash/destructiveChange.sh".execute()
             //execute the destructive build script
         proc.consumeProcessOutput(sout, serr)
         proc.waitForOrKill(1000)
@@ -250,7 +250,7 @@ def pushPackages() {
     //below: git add force-app/.
     sh '''
         git add force-app/.
-        git commit -q -m "deployment packages created"
+        git commit -m "deployment packages created"
     '''
     git credentialsId: 'gh_unpw2', url:'https://github.com/jackbarsotti/test_parambuild.git', branch: "deploymentBranch${datePart}"
     sh "git push -u origin deploymentBranch${datePart}"
