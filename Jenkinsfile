@@ -244,8 +244,9 @@ def pushPackages() {
     Date date = new Date()
     String datePart = date.format("dd/MM/yyyy")
     //sh "git branch -D deploymentBranch${datePart}"
-    //sh "git checkout -b deploymentBranch${datePart}"
-    sh "git checkout deploymentBranch${datePart}"
+    sh "git branch -D deploymentBranch11/08/20"
+    sh "git checkout -b deploymentBranch${datePart}"
+    //sh "git checkout deploymentBranch${datePart}"
     //push branch:
     //below: git add force-app/.
     sh '''
