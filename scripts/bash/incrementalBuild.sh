@@ -17,7 +17,7 @@ export triggerPath=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/gith
 git diff --name-only --pretty="" --diff-filter=UMA master |
 while read -r file; do
   # Copy the files from git diff into the deploy directory:
-  sudo cp --parents "$file" $SOURCE_PATH 2>/dev/null
+  sudo cp --parents $file $SOURCE_PATH 2>/dev/null
   # For any changed class or trigger file it's associated meta data file is copied to the deploy directory (and vice versa):
   if [[ $file == *.cls ]]; then
     find $classPath -samefile "$file-meta.xml" -exec sudo cp --parents -t $SOURCE_PATH {} \;
