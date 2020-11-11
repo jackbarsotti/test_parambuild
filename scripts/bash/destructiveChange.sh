@@ -2,7 +2,9 @@
 exec 1>/tmp/test
 # inputs:
 #deploydir updated with subdirectory "deployment", which is our new deployment package(s) parent dir:
-export DEPLOYDIR=/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment
+mkdir -p /Users/jackbarsotti/test_parambuild//force-app/main/default/deployment/destructivePackage/classes
+export DEPLOYDIR=/Users/jackbarsotti/test_parambuild//force-app/main/default/deployment
+  #export DEPLOYDIR=/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment
 #create destructivePackage folder (incremental build creates incrementalPackage folder within same deploydir):
 export destructivePackagePath=$DEPLOYDIR/destructivePackage
 #diff files will be moved into the classes folder:
@@ -17,7 +19,7 @@ git diff --name-only --pretty="" --diff-filter=D master |
     #best for when D files weren't deleted on the most recent commit
   #using git diff-tree instead because the output is much shorter (only file names) and therefore easier to use:
   while read -r file; do
-    sudo cp "$file" $SOURCE_PATH 2>/dev/null
+    sudo cp $file $SOURCE_PATH 2>/dev/null
   done
 
 echo "Converting Source format to Metadata API format"
