@@ -1,18 +1,23 @@
 #!/bin/bash
-exec 1>/tmp/test
+
+#What is this:
+#exec 1>/tmp/test
+
+# Inputs:
+
 #deploydir updated with subdirectory "deployment", which is our new deployment package(s) parent dir:
+mkdir -p /Users/jackbarsotti/test_parambuild//force-app/main/default/deployment/incrementalPackage/classes
 export DEPLOYDIR=/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment
-#create incrementalPackage folder within deploydir
+#create incrementalPackage folder within deploydir:
 export incrementalPackagePath=$DEPLOYDIR/incrementalPackage
 #diff files will be moved into the classes folder:
 export SOURCE_PATH=$incrementalPackagePath/classes
 export classPath=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/classes
 export triggerPath=/var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/force-app/main/default/triggers
 
-# Git Diff Section:
+# Git Diff:
 
-#using git diff-tree instead because the output is much shorter (only file names) and therefore easier to use:
-#can interchangeably use: git diff --name-only --pretty="" test
+#git diff --name-only --pretty="" test |
 #git diff-tree --no-commit-id --diff-filter=UMA --name-only -r HEAD | 
 git diff --name-only --pretty="" --diff-filter=UMA master |
 while read -r file; do
@@ -31,6 +36,8 @@ while read -r file; do
     find $triggerPath -samefile "$parsedfile.trigger" -exec sudo cp --parents -t $SOURCE_PATH {} \;
   fi
 done 
+
+# Create Incremental package.xml:
 
 echo "Converting Source format to Metadata API format"
 sfdx force:source:convert -p $SOURCE_PATH -d $SOURCE_PATH
