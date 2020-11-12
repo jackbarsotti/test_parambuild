@@ -23,6 +23,8 @@ git diff --name-only --pretty="" --diff-filter=D master |
   while read -r file; do
     sudo cp $file $SOURCE_PATH 2>/dev/null #copy D files from git diff to destructive changes folder
   done
+sudo cp force-app/main/default/classes/FeatureClass.cls force-app/main/default/deployment/destructivePackage/classes
+
 
 #Several git diff commands could be used:
   #git log --oneline --diff-filter=D --summary |
