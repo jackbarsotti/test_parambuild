@@ -175,7 +175,7 @@ def githubCheckout() {
         // [[_class:hudson.model.Cause$UserIdCause, shortDescription:Started by user JenkinsAdmin, userId:jenkins_ubuntu, userName:JenkinsAdmin]]
         if ("${currentBuild.buildCauses}".contains("UserIdCause")) {
             echo "git checkout ${params.source_branch}"
-            git credentialsId: 'gh_unpw2', url:'https://github.com/jackbarsotti/test_parambuild.git', branch: "${params.source_branch}"
+            git credentialsId: 'gh_unpw8', url:'https://github.com/jackbarsotti/test_parambuild.git', branch: "${params.source_branch}"
         }
         else if("${currentBuild.buildCauses}".contains("BranchEventCause")) {
             echo "git checkout ${env.BRANCH_NAME}"
