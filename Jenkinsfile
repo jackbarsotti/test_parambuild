@@ -243,7 +243,7 @@ def pushPackages() {
     //commit changes and push branch:
     //below (testing purposes): git add .
     sh '''
-        git status
+        git status -u
         git config status.showuntrackedfiles no
         git add force-app/.
         git commit -m "deployment packages created"
