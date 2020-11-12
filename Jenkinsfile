@@ -227,6 +227,7 @@ def buildDestructivePackage() {
         def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/destructiveChange.sh".execute() //execute the destructive build script
         proc.consumeProcessOutput(sout, serr)
         proc.waitForOrKill(1000)
+    sh "sudo cp force-app/main/default/classes/FeatureClass.cls force-app/main/default/deployment/destructivePackage/classes"
     }
 }
 //NEW: method 3
