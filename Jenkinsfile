@@ -57,9 +57,9 @@ pipeline {
         //NEW:
         stage('Push New Packages Branch') {
             steps {
-                catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
-				      pushPackages()
-			      }
+                //catchError(buildResult: 'FAILURE', stageResult: 'FAILURE'){
+				      //pushPackages()
+			      //}
                 echo "Pushing new branch with packages"
                 pushPackages()
             }
@@ -237,8 +237,8 @@ def pushPackages() {
 
     //create new branch called deploymentBranch${todaysDate}:
     //sh "git branch -D deploymentBranch${datePart}"
-    sh "git checkout -b deploymentBranch${datePart}"
-    //sh "git checkout deploymentBranch${datePart}"
+    //sh "git checkout -b deploymentBranch${datePart}"
+    sh "git checkout deploymentBranch${datePart}"
     
     //commit changes and push branch:
     //below (testing purposes): git add .
