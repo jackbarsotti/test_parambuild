@@ -7,7 +7,7 @@
 
 export API_VERSION=49.0 # api version (same as in the sfdx-project.json)
 #deploydir updated with subdirectory "deployment", which is our new deployment package(s) parent dir:
-mkdir -p /Users/jackbarsotti/test_parambuild//force-app/main/default/deployment/destructivePackage/classes
+#testing purposes: mkdir -p /Users/jackbarsotti/test_parambuild//force-app/main/default/deployment/destructivePackage/classes
 export DEPLOYDIR=/var/lib/jenkins/workspace/pipeline_${deployBranchURL}/github-checkout/force-app/main/default/deployment
 
 #create destructivePackage folder (incremental build creates incrementalPackage folder within same deploydir):
@@ -23,7 +23,7 @@ git diff --name-only --pretty="" --diff-filter=D master |
   while read -r file; do
     sudo cp $file $SOURCE_PATH 2>/dev/null #copy D files from git diff to destructive changes folder
   done
-sudo cp force-app/main/default/classes/FeatureClass.cls force-app/main/default/deployment/destructivePackage/classes
+#testing purposes: sudo cp force-app/main/default/classes/FeatureClass.cls force-app/main/default/deployment/destructivePackage/classes
 
 
 #Several git diff commands could be used:
