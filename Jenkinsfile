@@ -210,6 +210,7 @@ def buildIncrementalPackage() {
         def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/test.sh".execute() // execute the incremental script
         proc.consumeProcessOutput(sout, serr)
         proc.waitForOrKill(1000)
+        println sout
     }
 }   
 //NEW: method 2
