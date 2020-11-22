@@ -207,11 +207,10 @@ def buildIncrementalPackage() {
     echo DEPLOYDIR
     dir("${DEPLOYDIR}/deployment/incrementalPackage/classes") { // created deployment directory structure
         def sout = new StringBuffer(), serr = new StringBuffer()
-        def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/test.sh".execute() // execute the incremental script
+        def proc ="sh /var/lib/jenkins/workspace/parambuild_${deployBranchURL}/github-checkout/scripts/bash/incrementalBuild.sh".execute() // execute the incremental script
         proc.consumeProcessOutput(sout, serr)
         proc.waitForOrKill(1000)
         println sout
-        //sh 'pwd'
     }
 }   
 //NEW: method 2
