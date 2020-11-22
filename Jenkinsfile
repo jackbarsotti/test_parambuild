@@ -211,7 +211,7 @@ def buildIncrementalPackage() {
         proc.consumeProcessOutput(sout, serr)
         proc.waitForOrKill(1000)
         println sout
-        sh "pwd"
+        sh 'pwd'
     }
 }   
 //NEW: method 2
