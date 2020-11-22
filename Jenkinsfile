@@ -237,8 +237,8 @@ def pushPackages() {
 
     //create new branch called deploymentBranch${todaysDate}:
     //sh "git branch -D deploymentBranch${datePart}"
-    //sh "git checkout -b deploymentBranch${datePart}"
-    sh "git checkout deploymentBranch${datePart}"
+    sh "git checkout -b deploymentBranch${datePart}"
+    //sh "git checkout deploymentBranch${datePart}"
     
     //commit changes and push branch:
     //below (testing purposes): git add .

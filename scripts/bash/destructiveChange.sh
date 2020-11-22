@@ -4,7 +4,7 @@
 #exec 1>/tmp/test
 
 # Inputs:
-
+echo 'this is working'
 export API_VERSION=49.0 # api version (same as in the sfdx-project.json)
 #deploydir updated with subdirectory "deployment", which is our new deployment package(s) parent dir:
 #testing purposes: mkdir -p /Users/jackbarsotti/test_parambuild//force-app/main/default/deployment/destructivePackage/classes
