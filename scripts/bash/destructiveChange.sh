@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#What is this:
-#exec 1>/tmp/test
-
 # Inputs:
 
 export API_VERSION=49.0 # api version (same as in the sfdx-project.json)

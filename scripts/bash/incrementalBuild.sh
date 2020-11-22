@@ -1,8 +1,5 @@
 #!/bin/bash
 
-#What is this:
-#exec 1>/tmp/test
-
 # Inputs:
 
 #deploydir updated with subdirectory "deployment", which is our new deployment package(s) parent dir:
